@@ -10,3 +10,15 @@ Création d'une librairie "mat_lib" avec divers outils pour la manipulation de m
 ## Exercice 1
 
 Multiplication de matrices carrées
+
+## Exercice 2
+
+Enigme :
+
+Écrire un programme qui résoud automatiquement :
+
+3 4
+1 3 1 4
+1 1 1 3 1 1 1 4
+3 1 1 3 3 1 1 4
+1 3 2 1 2 3 2 1 1 4

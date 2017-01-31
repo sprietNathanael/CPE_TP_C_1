@@ -7,10 +7,17 @@ mat_lib.o: mat_lib.c
 exercice1.o: exercice1.c mat_lib.h
 	gcc -o exercice1.o -c exercice1.c -W -Wall -g
 
-all: exercice1
+exercice2: exercice2.o
+	gcc -o exercice2 exercice2.o mat_lib.o
+
+exercice2.o: exercice2.c
+	gcc -o exercice2.o -c exercice2.c -W -Wall -g
+
+
+all: exercice1 exercice2
 
 clean:
 	rm -rf *.o *.gch
 
 mrproper: clean
-	rm -rf exercice1
+	rm -rf exercice1 exercice2
