@@ -1,7 +1,7 @@
 /**
  * CPE-TP1 : Manipulation de Tableaux 1D et 2D
  * Exercice 2 : Enigme
- * @file	exercice1.c
+ * @file	exercice2.c
  * @author	Nathanaël SPRIET
  * @date	31/01/2017
  */
