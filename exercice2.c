@@ -1,6 +1,6 @@
 /**
  * CPE-TP1 : Manipulation de Tableaux 1D et 2D
- * Exercice 2 : Enigme
+ * @brief	Exercice 2 : Enigme
  * @file	exercice2.c
  * @author	Nathanaël SPRIET
  * @date	31/01/2017
@@ -11,60 +11,63 @@
 
 #define MAX_SIZE 255
 
+/*
+	Main funcion
+ */
 int main()
 {
-	int line[255] = {3,4};
-	int inter_line[255];
-	int desiredLineNumber = 10;
-	int line_quantity = 2;
-	int inter_line_currentIndex = 0;
-	int line_increment = 0;
+	// Main row
+	int mainRow[255] = {3,4};
+	// Intermediate row for computation
+	int interRow[255];
+	// Desired number of rows
+	int desiredRowNumber = 10;
+	// Initial element quantity in the main row
+	int rowQuantity = 2;
+	// Intermediate row current index
+	int interRowCurrentIndex = 0;
+	// Main row increment
+	int mainRowIncrement = 0;
+	// The value
 	int value = 0;
+	// The multiplicator
 	int multiplicator = 0;
-	int number_increment = 0;
-	/*
-		Create the desired lines
-	 */
-	for(line_increment = 0;line_increment < desiredLineNumber;line_increment++)
+	// The element increment
+	int elementIncrement = 0;
+
+	//	Create the desired number of rows
+	for(mainRowIncrement = 0;mainRowIncrement < desiredRowNumber;mainRowIncrement++)
 	{
+		// Initialise the multiplicator at 1
 		multiplicator = 1;
 		value = 0;
-		inter_line_currentIndex = 0;
-		/*
-			Browse the current line
-		 */
-		for(number_increment = 0;number_increment < line_quantity;number_increment++)
+		interRowCurrentIndex = 0;
+		// Browse the current row
+		for(elementIncrement = 0;elementIncrement < rowQuantity;elementIncrement++)
 		{
-			/*
-				Print current elements of the line
-			 */
-			printf("%d ", line[number_increment]);
-			value = line[number_increment];
-			/*
-				If the next element has the same value, just increment the multiplicator
-			 */
-			if(value==line[number_increment+1])
+			// Print current element of the row
+			printf("%d ", mainRow[elementIncrement]);
+			// Save the value
+			value = mainRow[elementIncrement];
+			// If the next element has the same value, just increment the multiplicator
+			if(value==mainRow[elementIncrement+1])
 			{
 				multiplicator++;
 			}
-			/*
-				Else, save the value and the multiplicator to the inter line
-			 */
+			// Else, save the value and the multiplicator to the intermediate row and re-initialise the multiplicator at 1
 			else
 			{
-				inter_line[inter_line_currentIndex++]=multiplicator;
-				inter_line[inter_line_currentIndex++]=value;
+				interRow[interRowCurrentIndex++]=multiplicator;
+				interRow[interRowCurrentIndex++]=value;
 				multiplicator=1;
 			}
 		}
 		printf("\n");
-		line_quantity = inter_line_currentIndex;
-		/*
-			Save the inter line into the main line
-		 */
-		for(number_increment = 0; number_increment < inter_line_currentIndex;number_increment++)
+		rowQuantity = interRowCurrentIndex;
+		// Save the intermediate row into the main row
+		for(elementIncrement = 0; elementIncrement < interRowCurrentIndex;elementIncrement++)
 		{
-			line[number_increment] = inter_line[number_increment];
+			mainRow[elementIncrement] = interRow[elementIncrement];
 		}
 	}
 	return 0;

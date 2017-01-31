@@ -18,16 +18,16 @@
 */
 
 /**
- * @brief      A type defined over the matrix structure
+ * @brief      A type defined over the tree structure
  */
 typedef struct tree Tree;
 
 /**
- * @brief      Represents a matrix
+ * @brief      Represents a tree
  */
 struct tree
 {
-    char** main_array; /*!< The main array of arrays (the first array is the rows and the second, the columns) */
+    char** mainArray; /*!< The main array of arrays (the first array is the rows and the second, the columns) */
     int col_number;  /*!< The number of columns */
     int row_number;  /*!< The number of rows */
 };
@@ -36,10 +36,25 @@ struct tree
  ***************************** Functions *************************
 */
 
-Tree generateTree(int foliage_heigth, int trunc_heigth, int trunc_width, int balls_number);
+/**
+ * @brief	Generate a character tree
+ * @param[in]	foliageHeight	The foliage desired Height
+ * @param[in]	truncHeight		The trunc desired Height
+ * @param[in]	truncWidth		The trunc desired width
+ * @param[in]	ballsNumber		The desired number of christmas balls
+ */
+Tree generateTree(int foliageHeight, int truncHeight, int truncWidth, int ballsNumber);
 
+/**
+ * @brief	Free a tree
+ * @param[in]	treeToFree		The tree to Free
+ */
 void freeTree(Tree* treeToFree);
 
+/**
+ * @brief	Draw a character tree
+ * @param[in]	treeToDraw		The tree to draw
+ */
 void drawTree(Tree* treeToDraw);
 
 

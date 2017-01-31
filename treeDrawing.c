@@ -8,79 +8,101 @@
 */
 
 #include "treeDrawing.h"
-Tree generateTree(int foliage_heigth, int trunc_heigth, int trunc_width, int balls_number)
+
+Tree generateTree(int foliageHeight, int truncHeight, int truncWidth, int ballsNumber)
 {
+	// Initialise the randomisation
 	srand(time(NULL));
-	int global_height = foliage_heigth+trunc_heigth;
-	int global_width = 1+((foliage_heigth-1)*2);
-	int starsNumberToDraw = global_width * global_height;
-	int ballsNumberToDraw = balls_number;
+	// Compute the global height and width of the tree
+	int globalHeight = foliageHeight+truncHeight;
+	int globalWidth = 1+((foliageHeight-1)*2);
+	// Compute the number of stars to draw
+	int starsNumberToDraw = globalWidth * globalHeight;
+	int ballsNumberToDraw = ballsNumber;
+	// If there are more balls to draw than stars, just draw as much balls as there are stars
 	if(ballsNumberToDraw > starsNumberToDraw)
 	{
 		ballsNumberToDraw = starsNumberToDraw;
 	}
-	if(global_width < trunc_width)
+	// If the global width is lesser than the truncWidth, draw a trunc as large as the global width
+	if(globalWidth < truncWidth)
 	{
-		global_width = trunc_width;
+		truncWidth = globalWidth;
 	}
+	// Initialise the Tree structure
 	Tree tree;
-	tree.col_number = global_width;
-	tree.row_number = global_height;
-	tree.main_array = malloc(global_height*sizeof(char*));
-	int row_increment= 0;
-	int col_increment = 0;
-	for(row_increment= 0; row_increment< global_height; row_increment++)
+	tree.col_number = globalWidth;
+	tree.row_number = globalHeight;
+	// Memory allocation fot the first level of pointer
+	tree.mainArray = malloc(globalHeight*sizeof(char*));
+	// Main two increments variable
+	int rowIncrement= 0;
+	int colIncrement = 0;
+	// Browse the rows of the array
+	for(rowIncrement= 0; rowIncrement< globalHeight; rowIncrement++)
 	{
-		tree.main_array[row_increment] = malloc(global_width*sizeof(char));
-		if(row_increment < foliage_heigth)
+		// Memory allocation for the second level of pointers
+		tree.mainArray[rowIncrement] = malloc(globalWidth*sizeof(char));
+		// Depending on the current row, if this is the foliage part
+		if(rowIncrement < foliageHeight)
 		{
-			int starsToDraw = 1+(row_increment*2);
-			int leftSpacesToDraw = (global_width - starsToDraw) / 2;
-			for(col_increment = 0; col_increment < leftSpacesToDraw; col_increment++)
+			// Compute the number of stars and spaces to draw for this row
+			int starsToDraw = 1+(rowIncrement*2);
+			int leftSpacesToDraw = (globalWidth - starsToDraw) / 2;
+			// Loop to create the left spaces
+			for(colIncrement = 0; colIncrement < leftSpacesToDraw; colIncrement++)
 			{
-				tree.main_array[row_increment][col_increment] = ' ';
+				tree.mainArray[rowIncrement][colIncrement] = ' ';
 			}
-			for(; col_increment < leftSpacesToDraw+starsToDraw; col_increment++)
+			// Loop to create the stars
+			for(; colIncrement < leftSpacesToDraw+starsToDraw; colIncrement++)
 			{
+				// If there are some balls to draw
 				if(ballsNumberToDraw > 0)
 				{
+					// If there are as much balls to draw as stars left to be drawn just draw all stars as balls
 					if(ballsNumberToDraw == starsNumberToDraw)
 					{
-						tree.main_array[row_increment][col_increment] = 'O';
+						tree.mainArray[rowIncrement][colIncrement] = 'O';
 						ballsNumberToDraw--;
 					}
 					else
 					{
+						// Choose if a star will be created or a ball by randomisation
 						if((rand() % 2))
 						{
-							tree.main_array[row_increment][col_increment] = 'O';
+							tree.mainArray[rowIncrement][colIncrement] = 'O';
 							ballsNumberToDraw--;
 						}
 						else
 						{
-							tree.main_array[row_increment][col_increment] = '*';
+							tree.mainArray[rowIncrement][colIncrement] = '*';
 						}
 					}
 				}
+				// If there are no more balls to draw
 				else
 				{
-					tree.main_array[row_increment][col_increment] = '*';
+					tree.mainArray[rowIncrement][colIncrement] = '*';
 				}
 				starsNumberToDraw--;
-
 			}
 		}
+		// depending on the current row, if this is the trunk part
 		else
 		{
-			int pipeToDraw = trunc_width;
-			int leftSpacesToDraw = (global_width - trunc_width) / 2;
-			for(col_increment = 0; col_increment < leftSpacesToDraw; col_increment++)
+			// Compute the number of pipe and space to draw
+			int pipeToDraw = truncWidth;
+			int leftSpacesToDraw = (globalWidth - truncWidth) / 2;
+			// Loop to create the spaces
+			for(colIncrement = 0; colIncrement < leftSpacesToDraw; colIncrement++)
 			{
-				tree.main_array[row_increment][col_increment] = ' ';
+				tree.mainArray[rowIncrement][colIncrement] = ' ';
 			}
-			for(; col_increment < leftSpacesToDraw+pipeToDraw; col_increment++)
+			// Loop to create the pipes
+			for(; colIncrement < leftSpacesToDraw+pipeToDraw; colIncrement++)
 			{
-				tree.main_array[row_increment][col_increment] = '|';
+				tree.mainArray[rowIncrement][colIncrement] = '|';
 			}
 		}
 	}
@@ -89,32 +111,28 @@ Tree generateTree(int foliage_heigth, int trunc_heigth, int trunc_width, int bal
 
 void freeTree(Tree* treeToFree)
 {
-	int row_increment = treeToFree->row_number;
-	/*
-		Browse the lines of the treeToFree
-	 */
-	for(row_increment = 0; row_increment < treeToFree->row_number; row_increment++)
+	int rowIncrement = treeToFree->row_number;
+	// Browse the rows of the treeToFree
+	for(rowIncrement = 0; rowIncrement < treeToFree->row_number; rowIncrement++)
 	{
-		free(treeToFree->main_array[row_increment]);
+		// Free the second level of pointers
+		free(treeToFree->mainArray[rowIncrement]);
 	}
-	free(treeToFree->main_array);
+	// Free the first level of pointer
+	free(treeToFree->mainArray);
 }
 
 void drawTree(Tree* treeToDraw)
 {
-	int row_increment = 0;
-	/*
-		Browse the lines of the tree
-	 */
-	for(row_increment = 0; row_increment < treeToDraw->row_number; row_increment++)
+	int rowIncrement = 0;
+	// Browse the rows of the tree
+	for(rowIncrement = 0; rowIncrement < treeToDraw->row_number; rowIncrement++)
 	{
-		int col_increment = 0;
-		/*
-			Browse the columns of the result tree
-		 */
-		for(col_increment = 0; col_increment < treeToDraw->col_number; col_increment++)
+		int colIncrement = 0;
+		// Browse the columns of the tree
+		for(colIncrement = 0; colIncrement < treeToDraw->col_number; colIncrement++)
 		{
-			printf("%c",treeToDraw->main_array[row_increment][col_increment]);
+			printf("%c",treeToDraw->mainArray[rowIncrement][colIncrement]);
 		}
 		printf("\n");
 	}
