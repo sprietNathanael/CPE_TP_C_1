@@ -22,3 +22,7 @@ Enigme :
 1 1 1 3 1 1 1 4
 3 1 1 3 3 1 1 4
 1 3 2 1 2 3 2 1 1 4
+
+## Exercice 3 : Irrégularité et période d'un quotient
+
+Écrire un programme qui trouve la période et / ou l'irrégularité d'un quotient

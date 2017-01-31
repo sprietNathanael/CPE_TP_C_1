@@ -13,11 +13,17 @@ exercice2: exercice2.o
 exercice2.o: exercice2.c
 	gcc -o exercice2.o -c exercice2.c -W -Wall -g
 
+exercice3: exercice3.o
+	gcc -o exercice3 exercice3.o mat_lib.o
 
-all: exercice1 exercice2
+exercice3.o: exercice3.c
+	gcc -o exercice3.o -c exercice3.c -W -Wall -g
+
+
+all: exercice1 exercice2 exercice3
 
 clean:
 	rm -rf *.o *.gch
 
 mrproper: clean
-	rm -rf exercice1 exercice2
+	rm -rf exercice1 exercice2 exercice3
