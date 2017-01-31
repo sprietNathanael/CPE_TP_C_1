@@ -60,6 +60,7 @@ void multiplication(Matrix* mat1, Matrix* mat2, Matrix* mat_res)
 int** generateMatrix(int row_number, int col_number, int value)
 {
 	int row_incerment = 0;
+	srand(time(NULL));
 	int** array;
 	array = malloc(row_number*sizeof(int*));
 	/*
